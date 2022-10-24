@@ -119,3 +119,37 @@ function startQuiz () {
 }
 
 startBtn.addEventListener("click", startQuiz);
+
+function showQuestion (n) {
+    askQuestion.textContent = questionSource[n].question;
+    answerBtn1.textContent = questionSource[n].choices[0];
+    answerBtn2.textContent = questionSource[n].choices[1];
+    answerBtn3.textContent = questionSource[n].choices[2];
+    answerBtn4.textContent = questionSource[n].choices[3];
+    questionNumber = n;
+}
+
+function checkAnswer(event) {
+    event.preventDefault();
+    checkLine.style.display = "block";
+    setTimeout(function () {
+        checkLine.style.display = 'none';
+    }, 1000); 
+
+    if (questionSource[questionNumber].answer == event.target.value) {
+        checkLine.textContent = "Correct!"; 
+        totalScore = totalScore + 1;
+
+    } else {
+        secondsLeft = secondsLeft - 10;
+        checkLine.textContent = "Wrong! The correct answer is " + questionSource[questionNumber].answer + ".";
+    }
+        
+    if (questionNumber < questionSource.length -1 ) {
+
+        showQuestion(questionNumber +1);
+    } else {
+    gameOver();
+}
+questionCount++;
+}
