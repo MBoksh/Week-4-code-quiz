@@ -3,7 +3,7 @@
   box-sizing: border-box;
 }
 
-header {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,9 +46,9 @@ li {
   margin-bottom: 10px;
 }
 
-/* .question_page, .submit_page, .highscore_page, #check_line {
+.question_page, .submit_page, .highscore_page, #check_line {
     display:none;
-} */
+}
 
 .button {
   background: white;

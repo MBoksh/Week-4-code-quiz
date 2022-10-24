@@ -19,7 +19,7 @@ var userInitial = document.querySelector("#initial");
 var submitBtn = document.querySelector("#submit_btn");
 var highScorePage = document.querySelector("#highscore_page");
 var scoreRecord = document.querySelector("#score_record");
-var scoreCheck = document.querySelector("#check_check");
+var scoreCheck = document.querySelector("#score_check");
 var finish = document.querySelector("#finish");
 
 var backBtn = document.querySelector("#back_btn");
@@ -27,62 +27,44 @@ var clearBtn = document.querySelector("#clear_btn");
 
 var questionSource = [
   {
-    question:
-      "Questions 1 : String values must be enclosed within _____ when being assigned to variables.",
-    choices: ["a. commas", "b. curly brackets", "c. quotes", "d. parenthesis"],
-    answer: "c",
-  },
-  {
-    question: "Questions 2 : Commonly used data types DO NOT include:",
+    question: "Questions 1 : Commonly used data types DO NOT include:",
     choices: ["a. strings", "b. booleans", "c. alerts", "d. numbers"],
     answer: "c",
   },
   {
-    question: "Questions 3 : How do you create a function in JavaScript",
+    question:
+      "Questions 2 : The condition in an if / else statement is enclosed within ____.",
     choices: [
-      "a. function = myFunction()",
-      "b. function myFunction()",
-      "c. function:myFunction()",
-      "d. createMyFunction()",
-    ],
-    answer: "b",
-  },
-  {
-    question: "Questions 4 : How do you call a function named myFunction?",
-    choices: [
-      "a. call myFunction()",
-      "b. call function myFunction()",
-      "c. myFunction()",
-      "d. call myFunction",
+      "a. quotes",
+      "b. curly brackets",
+      "c. parentheses",
+      "d. square brackets",
     ],
     answer: "c",
   },
   {
-    question:
-      "Questions 5 : To see if two variables are equal in an if / else statement you would use ____.",
-    choices: ["a. =", "b. ==", "c. 'equals'", "d. !="],
-    answer: "b",
-  },
-  {
-    question: "Questions 6 : The first index of an array is ____.",
-    choices: ["a. 0", "b. 1", "c. 8", "d. any"],
-    answer: "a",
-  },
-  {
-    question: "Questions 7 : How to write an IF statement in JavaScript?",
+    question: "Questions 3 : Arrays in JavaScript can be used to store ____.",
     choices: [
-      "a. if i == 5 then",
-      "b. if i = 5 then",
-      "c. if(i == 5)",
-      "d. if i = 5",
+      "a. numbers and strings",
+      "b. other arrays",
+      "c. booleans",
+      "d. all of the above",
     ],
+    answer: "d",
+  },
+  {
+    question:
+      "Questions 4 : String values must be enclosed within ____ when being assigned to variables.",
+    choices: ["a. commas", "b. curly brackets", "c. quotes", "d. parentheses"],
     answer: "c",
   },
   {
     question:
-      "Questions 8 : Which event occurs when the user clicks on an HTML element?",
-    choices: ["a. onclick", "b. onchange", "c. onmouseover", "d. onmouseclick"],
-    answer: "a",
+      "Questions 5 : A very useful tool used during development and debugging for printing content to the debugger is:",
+    choices: [
+      "a. JavaScript", "b. terminal / bash", "c. for loops", "d. console.log",
+    ],
+    answer: "d",
   },
 ];
 
@@ -101,6 +83,7 @@ function countdown() {
     if (secondsLeft <= 0) {
       clearInterval(timerInterval);
       timeLeft.textContent = "Time is up!";
+
       finish.textContent = "Time is up!";
       gameOver();
     } else if (questionCount >= questionSource.length + 1) {
@@ -118,8 +101,6 @@ function startQuiz() {
   showQuestion(questionNumber);
 }
 
-startBtn.addEventListener("click", startQuiz);
-
 function showQuestion(n) {
   askQuestion.textContent = questionSource[n].question;
   answerBtn1.textContent = questionSource[n].choices[0];
@@ -131,6 +112,7 @@ function showQuestion(n) {
 
 function checkAnswer(event) {
   event.preventDefault();
+
   checkLine.style.display = "block";
   setTimeout(function () {
     checkLine.style.display = "none";
@@ -144,7 +126,7 @@ function checkAnswer(event) {
     checkLine.textContent =
       "Wrong! The correct answer is " +
       questionSource[questionNumber].answer +
-      ".";
+      " .";
   }
 
   if (questionNumber < questionSource.length - 1) {
@@ -159,7 +141,9 @@ function gameOver() {
   questionPage.style.display = "none";
   scoreBoard.style.display = "block";
   console.log(scoreBoard);
+
   finalScore.textContent = "Your final score is :" + totalScore;
+
   timeLeft.style.display = "none";
 }
 
@@ -177,10 +161,23 @@ function getScore() {
 function renderScore() {
   scoreRecord.innerHTML = "";
   scoreRecord.style.display = "block";
+
   var li = document.createElement("li");
   li.textContent = item.user + " - " + item.score;
   li.setAttribute("data-index", i);
   scoreRecord.appendChild(li);
+}
+
+function sort() {
+  var unsortedList = getScore();
+  if (getScore == null) {
+    return;
+  } else {
+    unsortedList.sort(function (a, b) {
+      return b.score - a.score;
+    });
+    return unsortedList;
+  }
 }
 
 function addItem(n) {
@@ -197,6 +194,8 @@ function saveScore() {
   addItem(scoreItem);
   renderScore();
 }
+
+startBtn.addEventListener("click", startQuiz);
 
 reactButtons.forEach(function (click) {
   click.addEventListener("click", checkAnswer);
