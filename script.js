@@ -117,3 +117,5 @@ function startQuiz () {
     countdown();
     showQuestion(questionNumber);
 }
+
+startBtn.addEventListener("click", startQuiz);
