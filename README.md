@@ -23,3 +23,11 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and my score
 ```
+## Criteria Met
+
+The quiz is started when the start button is clicked. The timer starts and a question is presented, one after the other. When a question is answered incorrectly, then 10 seconds is subtrracted from the clock. The game is over when the timer reaches 0 or all questions are answered. I wasn't able to display the saved scores.
+
+## Screenshot
+![](Screenshot%202022-10-24%20173400.png)
+
+## Live URL: 
