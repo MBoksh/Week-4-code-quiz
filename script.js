@@ -106,50 +106,79 @@ function countdown() {
     } else if (questionCount >= questionSource.length + 1) {
       clearInterval(timerInterval);
       gameOver();
-    }
+    };
   }, 1000);
-}
+};
 
-function startQuiz () {
-    introPage.style.display = "none";
-    questionPage.style.display = "block";
-    questionNumber = 0
-    countdown();
-    showQuestion(questionNumber);
-}
+function startQuiz() {
+  introPage.style.display = "none";
+  questionPage.style.display = "block";
+  questionNumber = 0;
+  countdown();
+  showQuestion(questionNumber);
+};
 
 startBtn.addEventListener("click", startQuiz);
 
-function showQuestion (n) {
-    askQuestion.textContent = questionSource[n].question;
-    answerBtn1.textContent = questionSource[n].choices[0];
-    answerBtn2.textContent = questionSource[n].choices[1];
-    answerBtn3.textContent = questionSource[n].choices[2];
-    answerBtn4.textContent = questionSource[n].choices[3];
-    questionNumber = n;
-}
+function showQuestion(n) {
+  askQuestion.textContent = questionSource[n].question;
+  answerBtn1.textContent = questionSource[n].choices[0];
+  answerBtn2.textContent = questionSource[n].choices[1];
+  answerBtn3.textContent = questionSource[n].choices[2];
+  answerBtn4.textContent = questionSource[n].choices[3];
+  questionNumber = n;
+};
 
 function checkAnswer(event) {
-    event.preventDefault();
-    checkLine.style.display = "block";
-    setTimeout(function () {
-        checkLine.style.display = 'none';
-    }, 1000); 
+  event.preventDefault();
+  checkLine.style.display = "block";
+  setTimeout(function () {
+    checkLine.style.display = "none";
+  }, 1000);
 
-    if (questionSource[questionNumber].answer == event.target.value) {
-        checkLine.textContent = "Correct!"; 
-        totalScore = totalScore + 1;
+  if (questionSource[questionNumber].answer == event.target.value) {
+    checkLine.textContent = "Correct!";
+    totalScore = totalScore + 1;
+  } else {
+    secondsLeft = secondsLeft - 10;
+    checkLine.textContent =
+      "Wrong! The correct answer is " +
+      questionSource[questionNumber].answer +
+      ".";
+  }
 
-    } else {
-        secondsLeft = secondsLeft - 10;
-        checkLine.textContent = "Wrong! The correct answer is " + questionSource[questionNumber].answer + ".";
-    }
-        
-    if (questionNumber < questionSource.length -1 ) {
-
-        showQuestion(questionNumber +1);
-    } else {
+  if (questionNumber < questionSource.length - 1) {
+    showQuestion(questionNumber + 1);
+  } else {
     gameOver();
-}
-questionCount++;
-}
+  }
+  questionCount++;
+};
+
+function gameOver() {
+  questionPage.style.display = "none";
+  scoreBoard.style.display = "block";
+  console.log(scoreBoard);
+  finalScore.textContent = "Your final score is :" + totalScore;
+  timeLeft.style.display = "none";
+};
+
+function getScore () {
+    var currentList =localStorage.getItem("ScoreList");
+    if (currentList !== null ){
+        freshList = JSON.parse(currentList);
+        return freshList;
+    } else {
+        freshList = [];
+    }
+    return freshList;
+};
+
+function renderScore () {
+    scoreRecord.innerHTML = "";
+    scoreRecord.style.display ="block";
+    var li = document.createElement("li");
+    li.textContent = item.user + " - " + item.score;
+    li.setAttribute("data-index", i);
+    scoreRecord.appendChild(li);
+    };
