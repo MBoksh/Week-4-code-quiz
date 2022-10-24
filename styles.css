@@ -46,6 +46,10 @@ li {
   margin-bottom: 10px;
 }
 
+/* .question_page, .submit_page, .highscore_page, #check_line {
+    display:none;
+} */
+
 .button {
   background: white;
   border-radius: 3px;

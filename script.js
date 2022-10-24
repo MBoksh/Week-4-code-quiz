@@ -19,7 +19,7 @@ var userInitial = document.querySelector("#initial");
 var submitBtn = document.querySelector("#submit_btn");
 var highScorePage = document.querySelector("#highscore_page");
 var scoreRecord = document.querySelector("#score_record");
-var scoreCheck = document.querySelector("#score_check");
+var scoreCheck = document.querySelector("#check_check");
 var finish = document.querySelector("#finish");
 
 var backBtn = document.querySelector("#back_btn");
@@ -106,9 +106,9 @@ function countdown() {
     } else if (questionCount >= questionSource.length + 1) {
       clearInterval(timerInterval);
       gameOver();
-    };
+    }
   }, 1000);
-};
+}
 
 function startQuiz() {
   introPage.style.display = "none";
@@ -116,7 +116,7 @@ function startQuiz() {
   questionNumber = 0;
   countdown();
   showQuestion(questionNumber);
-};
+}
 
 startBtn.addEventListener("click", startQuiz);
 
@@ -127,7 +127,7 @@ function showQuestion(n) {
   answerBtn3.textContent = questionSource[n].choices[2];
   answerBtn4.textContent = questionSource[n].choices[3];
   questionNumber = n;
-};
+}
 
 function checkAnswer(event) {
   event.preventDefault();
@@ -153,7 +153,7 @@ function checkAnswer(event) {
     gameOver();
   }
   questionCount++;
-};
+}
 
 function gameOver() {
   questionPage.style.display = "none";
@@ -161,24 +161,76 @@ function gameOver() {
   console.log(scoreBoard);
   finalScore.textContent = "Your final score is :" + totalScore;
   timeLeft.style.display = "none";
-};
+}
 
-function getScore () {
-    var currentList =localStorage.getItem("ScoreList");
-    if (currentList !== null ){
-        freshList = JSON.parse(currentList);
-        return freshList;
-    } else {
-        freshList = [];
-    }
+function getScore() {
+  var currentList = localStorage.getItem("ScoreList");
+  if (currentList !== null) {
+    freshList = JSON.parse(currentList);
     return freshList;
-};
+  } else {
+    freshList = [];
+  }
+  return freshList;
+}
 
-function renderScore () {
-    scoreRecord.innerHTML = "";
-    scoreRecord.style.display ="block";
-    var li = document.createElement("li");
-    li.textContent = item.user + " - " + item.score;
-    li.setAttribute("data-index", i);
-    scoreRecord.appendChild(li);
-    };
+function renderScore() {
+  scoreRecord.innerHTML = "";
+  scoreRecord.style.display = "block";
+  var li = document.createElement("li");
+  li.textContent = item.user + " - " + item.score;
+  li.setAttribute("data-index", i);
+  scoreRecord.appendChild(li);
+}
+
+function addItem(n) {
+  var addedList = getScore();
+  addedList.push(n);
+  localStorage.setItem("ScoreList", JSON.stringify(addedList));
+}
+
+function saveScore() {
+  var scoreItem = {
+    user: userInitial.value,
+    score: totalScore,
+  };
+  addItem(scoreItem);
+  renderScore();
+}
+
+reactButtons.forEach(function (click) {
+  click.addEventListener("click", checkAnswer);
+});
+
+submitBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  scoreBoard.style.display = "none";
+  introPage.style.display = "none";
+  highScorePage.style.display = "block";
+  questionPage.style.display = "none";
+  saveScore();
+});
+
+scoreCheck.addEventListener("click", function (event) {
+  event.preventDefault();
+  scoreBoard.style.display = "none";
+  introPage.style.display = "none";
+  highScorePage.style.display = "block";
+  questionPage.style.display = "none";
+  renderScore();
+});
+
+backBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  scoreBoard.style.display = "none";
+  introPage.style.display = "block";
+  highScorePage.style.display = "none";
+  questionPage.style.display = "none";
+  location.reload();
+});
+
+clearBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  localStorage.clear();
+  renderScore();
+});
